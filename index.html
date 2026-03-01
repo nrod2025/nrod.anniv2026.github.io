@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>Joyeux Anniversaire 🎉</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <style>
     body {
       margin: 0;
@@ -14,16 +13,14 @@
       background: #ffffff;
       overflow-x: hidden;
     }
-
     img {
       width: 100%;
       max-width: 900px;
       display: block;
       margin: 0 auto;
     }
-
     button {
-      margin-top: 20px;
+      margin: 20px auto;
       background: #ff8fab;
       color: white;
       border: none;
@@ -32,13 +29,12 @@
       border-radius: 999px;
       cursor: pointer;
       transition: 0.2s;
+      display: block;
     }
-
     button:hover {
       background: #ff5d8f;
       transform: scale(1.05);
     }
-
     canvas {
       position: fixed;
       top: 0;
@@ -51,18 +47,15 @@
 
 <body>
 
-  <!-- Ton graphique Canva -->
+  <button onclick="confettis()">🎊 Clique ici 🎊</button>
+
   <img src="anniv2026.png" alt="Joyeux anniversaire">
 
-  <!-- Bouton pour lancer les confettis -->
   <button onclick="confettis()">🎊 Clique ici 🎊</button>
 
   <canvas id="confetti"></canvas>
 
-  <!-- Script confettis -->
   <script>
-    // Mini version de canvas-confetti intégrée directement
-    // (aucune ressource externe nécessaire)
     (function() {
       var confetti = function(opts) {
         var count = opts.particleCount || 50;
@@ -74,15 +67,11 @@
           ticks: 200,
           origin: opts.origin || { x: 0.5, y: 0.5 }
         };
-
         var canvas = document.getElementById("confetti");
         var ctx = canvas.getContext("2d");
-
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-
         var particles = [];
-
         for (var i = 0; i < count; i++) {
           particles.push({
             x: canvas.width * defaults.origin.x,
@@ -95,30 +84,23 @@
             color: "hsl(" + Math.random() * 360 + ", 100%, 50%)"
           });
         }
-
         function update() {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
-
           particles.forEach(function(p) {
             p.x += Math.cos(p.angle) * p.velocity;
             p.y += Math.sin(p.angle) * p.velocity + p.gravity;
             p.velocity *= p.decay;
             p.ticks--;
-
             ctx.fillStyle = p.color;
             ctx.fillRect(p.x, p.y, 5, 5);
           });
-
           particles = particles.filter(p => p.ticks > 0);
-
           if (particles.length > 0) {
             requestAnimationFrame(update);
           }
         }
-
         update();
       };
-
       window.confettis = function() {
         confetti({ particleCount: 80, spread: 70, origin: { x: 0.5, y: 0.2 } });
       };
